@@ -19,7 +19,7 @@ def get_images_and_labels(path):
     for image_path in image_paths:
         PIL_img = Image.open(image_path).convert('L')
         img_numpy = np.array(PIL_img, 'uint8')
-
+        
         id = int(os.path.split(image_path)[-1].split('_')[1].split('.png')[0])
         faces = detector.detectMultiScale(img_numpy)
 
@@ -30,11 +30,11 @@ def get_images_and_labels(path):
 
 
 def train():
-    print ('\n [INFO] Training faces. It will take a few seconds. Wait...')
+    print ('\n [INFO] Training faces. It will take a few seconds...')
     faces, ids = get_images_and_labels(path)
     recognizer.train(faces, np.array(ids))
     recognizer.write('./trainer/trainer.yml')
-    print(f' [INFO] {len(np.unique(ids))} faces trained \n')
+    print(f' [INFO] {len(np.unique(ids))} faces trained\n')
 
 
 if __name__ == '__main__':

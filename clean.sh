@@ -3,7 +3,6 @@
 rm ./dataset/*
 rm ./trainer/*
 echo """{
-    \"names\": [
-        \"None\"
-    ]
+    \"names\": [],
+	\"allowed_users\": []
 }""" > ./config/users.json

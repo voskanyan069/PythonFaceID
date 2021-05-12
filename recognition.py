@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import cv2 as cv2
-import numpy as np
 import os
 import json
 
@@ -15,6 +14,7 @@ font = cv2.FONT_HERSHEY_SIMPLEX
 id = 0
 with open('./config/users.json') as f:
     data = json.load(f)
+    allowed_users = data['allowed_users']
 names = data['names']
 
 cam = cv2.VideoCapture(0)
@@ -38,8 +38,11 @@ def recognize_face():
         for(x,y,w,h) in faces:
             cv2.rectangle(img, (x,y), (x+w,y+h), (0,255,0), 2)
             id, confidence = recognizer.predict(gray[y:y+h,x:x+w])
-            if confidence < 100:
-                id = names[id - 1]
+            if confidence <= 100:
+                id = names[id - 2]
+                if (100 - confidence) > 80:
+                    if id in allowed_users:
+                        print(f' [INFO] Allowed user: {id}')
             else:
                 id = 'unknown'
             confidence = f'{round(100 - confidence)}%'
