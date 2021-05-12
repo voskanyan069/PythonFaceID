@@ -6,7 +6,7 @@ import json
 
 
 face_cascade = cv2\
-    .CascadeClassifier('./assets/haarcascade_frontalface_default.xml')
+    .CascadeClassifier('../assets/haarcascade_frontalface_default.xml')
 
 cam = cv2.VideoCapture(0)
 cam.set(3, 640)

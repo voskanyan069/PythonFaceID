@@ -4,7 +4,7 @@ import cv2 as cv2
 
 
 face_cascade = cv2\
-    .CascadeClassifier('./assets/haarcascade_frontalface_default.xml')
+    .CascadeClassifier('../assets/haarcascade_frontalface_default.xml')
 
 cam = cv2.VideoCapture(0)
 cam.set(3, 640)
@@ -17,7 +17,7 @@ def open_camera():
     while True:
         ret, img = cam.read()
         img = cv2.flip(img, 1)
-        #mask = cv2.imread('./masks/mask_1.png')
+        #mask = cv2.imread('./mask_1.png')
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray,

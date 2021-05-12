@@ -7,7 +7,7 @@ import json
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('./trainer/trainer.yml')
-cascade_path = './assets/haarcascade_frontalface_default.xml'
+cascade_path = '../assets/haarcascade_frontalface_default.xml'
 face_cascade = cv2.CascadeClassifier(cascade_path);
 font = cv2.FONT_HERSHEY_SIMPLEX
 

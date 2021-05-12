@@ -8,7 +8,7 @@ import os
 
 path = './dataset'
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = cv2.CascadeClassifier('./assets/haarcascade_frontalface_default.xml')
+detector = cv2.CascadeClassifier('../assets/haarcascade_frontalface_default.xml')
 
 
 def get_images_and_labels(path):
