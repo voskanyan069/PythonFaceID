@@ -17,8 +17,6 @@ def open_camera():
     while True:
         ret, img = cam.read()
         img = cv2.flip(img, 1)
-        mask = cv2.imread('./mask_1.png')
-        mask = cv2.flip(mask, 1)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray,
@@ -27,16 +25,12 @@ def open_camera():
             minSize = (int(minW), int(minH))
         )
         for (x,y,w,h) in faces:
-            mask = cv2.resize(mask, (w, h), interpolation = cv2.INTER_AREA)
-            maskgray = cv2.cvtColor(mask,cv2.COLOR_BGR2GRAY)
+            kernel_w = (w // 4) | 1
+            kernel_h = (h // 4) | 1
             roi = img[x:x+w, y:y+h]
-            ret, frame_m = cv2.threshold(maskgray, 10, 255, cv2.THRESH_BINARY)
-            mask_inv = cv2.bitwise_not(frame_m)
-            img_bg = cv2.bitwise_and(roi,roi,mask = mask_inv)
-            mask_fg = cv2.bitwise_and(mask,mask,mask = frame_m)
-            dst = cv2.add(img_bg,mask_fg)
-            img[x:x+w, y:y+h] = dst
-            cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+            roi = cv2.GaussianBlur(roi, (kernel_w, kernel_h), 0)
+            img[x:x+w, y:y+h] = roi
+            cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
         cv2.imshow('cam', img)
         k = cv2.waitKey(10) & 0xff
         if k == 27:
