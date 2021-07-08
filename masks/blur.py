@@ -3,7 +3,7 @@
 import cv2 as cv2
 
 
-face_cascade = cv2\
+face_cascade = cv2 \
     .CascadeClassifier('../assets/haarcascade_frontalface_default.xml')
 
 cam = cv2.VideoCapture(0)
@@ -20,9 +20,9 @@ def open_camera():
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray,
-            scaleFactor = 1.2,
-            minNeighbors = 5,
-            minSize = (int(minW), int(minH))
+            scaleFactor=1.2,
+            minNeighbors=5,
+            minSize=(int(minW), int(minH))
         )
         for (x,y,w,h) in faces:
             kernel_w = (w // 4) | 1

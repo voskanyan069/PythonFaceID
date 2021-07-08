@@ -3,7 +3,7 @@
 import cv2 as cv2
 
 
-face_cascade = cv2\
+face_cascade = cv2 \
     .CascadeClassifier('../assets/haarcascade_frontalface_default.xml')
 
 cam = cv2.VideoCapture(0)
@@ -22,21 +22,21 @@ def open_camera():
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray,
-            scaleFactor = 1.2,
-            minNeighbors = 5,
-            minSize = (int(minW), int(minH))
+            scaleFactor=1.2,
+            minNeighbors=5,
+            minSize=(int(minW), int(minH))
         )
         for (x,y,w,h) in faces:
-            mask = cv2.resize(mask, (w, h), interpolation = cv2.INTER_AREA)
+            mask = cv2.resize(mask, (w,h), interpolation=cv2.INTER_AREA)
             maskgray = cv2.cvtColor(mask,cv2.COLOR_BGR2GRAY)
             roi = img[x:x+w, y:y+h]
             ret, frame_m = cv2.threshold(maskgray, 10, 255, cv2.THRESH_BINARY)
             mask_inv = cv2.bitwise_not(frame_m)
-            img_bg = cv2.bitwise_and(roi,roi,mask = mask_inv)
-            mask_fg = cv2.bitwise_and(mask,mask,mask = frame_m)
-            dst = cv2.add(img_bg,mask_fg)
+            img_bg = cv2.bitwise_and(roi, roi, mask=mask_inv)
+            mask_fg = cv2.bitwise_and(mask, mask, mask=frame_m)
+            dst = cv2.add(img_bg, mask_fg)
             img[x:x+w, y:y+h] = dst
-            cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+            cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
         cv2.imshow('cam', img)
         k = cv2.waitKey(10) & 0xff
         if k == 27:

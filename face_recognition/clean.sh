@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm ./dataset/*
-rm ./trainer/*
+echo '' > ./trainer/trainer.yml
 echo """{
     \"names\": [],
 	\"allowed_users\": []

@@ -43,11 +43,11 @@ def open_camera():
             minNeighbors=5,
             minSize=(int(minW), int(minH)),
         )
-        for (x, y, w, h) in faces:
-            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        for (x,y,w,h) in faces:
+            cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
             count += 1
             file_name = f'./dataset/{face_uuid}_{face_id}_{count}.png'
-            cv2.imwrite(file_name, gray[y:y + h, x:x + w])
+            cv2.imwrite(file_name, gray[y:y+h, x:x+w])
             print(f' [{count}] Capture saved into ./dataset')
         cv2.imshow('cam', img)
         k = cv2.waitKey(10) & 0xff
